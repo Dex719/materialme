@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material You UI Library</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="material-me.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") { document.body.classList.add("light-theme"); }
+        })();
+    </script>
+
+    <header class="header">
+        <div class="overlay" id="overlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="sidebar-close-btn" id="sidebar-close-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="./index.html">MaterialMe</a></li>
+                    <li><a href="./installation.html">Installation</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                <h3 class="nav-category">TEMPLATES</h3>
+                <ul>
+                    <li><a href="#">Cally</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+                <h3 class="nav-category">COMPONENTS</h3>
+                <ul>
+                    <li><a href="./selection.html">Selection</a></li>
+                    <li><a href="./slider.html">Sliders</a></li>
+                    <li><a href="./tabs.html">Tabs</a></li>
+                    <li><a href="./buttons.html">Buttons</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <button class="burger-menu" aria-label="Открыть меню">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="header-right">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Сменить тему">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <button class="user-icon-btn" aria-label="Профиль пользователя">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </button>
+            <a href="#" class="purchase-button">Purchase</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <div class="left-panel-card card">
+                <div class="logo"><img src="./svg/logo.svg" alt="logo"></div>
+                <span class="left-panel__mtext">Material You - centric UI Library <span class="left-panel__text">Design
+                        System and Components that unify React, Tailwind & Material UI Guidelines on NextJS &
+                        Typescript.</span></span>
+                <div class="button-group">
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                    <a href="#" class="btn btn-secondary">
+                        M3 Guidelines
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <a href="#" class="card card-donate">
+                    <div class="card-content">
+                        <img src="./svg/figma.svg" alt="figma" width="36" height="36">
+                        <span>Donate for coffee</span>
+                    </div>
+                    <svg class="arrow-icon" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+                <a href="#" class="card card-about">
+                    <div class="card-content">
+                        <img src="./svg/figma.svg" alt="figma" width="36" height="36">
+                        <span>About creator</span>
+                    </div>
+                    <svg class="arrow-icon" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+                <a href="#" class="card card-explore">
+                    <div class="card-content">
+                        <img src="./svg/react.svg" alt="react" width="36" height="36">
+                        <span>Explore Components</span>
+                    </div>
+                    <svg class="arrow-icon" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <section class="features-section">
+            <div class="features-header">
+                <span class="features-header-mtext">React & Tailwind library</span>
+                <span class="features-header-stext">What to expect inside of the MaterialMe</span>
+            </div>
+
+            <div class="features-grid">
+                <a href="#" class="feature-card">
+                    <div class="feature-icon-wrapper icon-bg-1"><img src="./svg/star.svg" alt="" width="60" height="60">
+                    </div>
+                    <span class="feature-card-matext">Components</span>
+                    <span class="feature-card-setext">MaterialMe offers over 30+ types of components, each crafted with
+                        a unique style and based on the latest Material You design principles</span>
+                    <div class="feature-link-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-opacity="0.2" stroke-width="2" />
+                            <path d="M10.75 8.75L14.25 12L10.75 15.25" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </a>
+                <a href="#" class="feature-card">
+                    <div class="feature-icon-wrapper icon-bg-2"><img src="./svg/resp.svg" alt=""></div>
+                    <span class="feature-card-matext">Logos & Icons</span>
+                    <span class="feature-card-setext">MaterialMe features a wide variety of logos to help you brand your
+                        website or application with ease</span>
+                </a>
+                <a href="#" class="feature-card">
+                    <div class="feature-icon-wrapper icon-bg-3"><img src="./svg/sun.svg" alt="" width="60" height="60">
+                    </div>
+                    <span class="feature-card-matext">Dark & Light Theme</span>
+                    <span class="feature-card-setext">Easily switch between dark and light themes to create a visually
+                        stunning user experience that adapts to your users' preferences</span>
+                    <div class="feature-link-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-opacity="0.2" stroke-width="2" />
+                            <path d="M10.75 8.75L14.25 12L10.75 15.25" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </a>
+                <a href="#" class="feature-card">
+                    <div class="feature-icon-wrapper icon-bg-4"><img src="./svg/font.svg" alt="" width="60" height="60">
+                    </div>
+                    <span class="feature-card-matext">Full responsive</span>
+                    <span class="feature-card-setext">MaterialMe is fully responsive, allowing you to create interfaces
+                        that look great on any device, from desktops to mobile devices</span>
+                    <div class="feature-link-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-opacity="0.2" stroke-width="2" />
+                            <path d="M10.75 8.75L14.25 12L10.75 15.25" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </a>
+                <a href="#" class="feature-card">
+                    <div class="feature-icon-wrapper icon-bg-5"><img src="./svg/star2.svg" alt="" width="60"
+                            height="60"></div>
+                    <span class="feature-card-matext">Color palette</span>
+                    <span class="feature-card-setext">Provides a comprehensive set of pre-defined colors that can be
+                        easily accessed and customized in MaterialMe library</span>
+                    <div class="feature-link-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="currentColor" stroke-opacity="0.2" stroke-width="2" />
+                            <path d="M10.75 8.75L14.25 12L10.75 15.25" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </a>
+                <a href="#" class="feature-card">
+                    <div class="feature-icon-wrapper icon-bg-6"><img src="./svg/palette.svg" alt=""></div>
+                    <span class="feature-card-matext">Fonts & styles</span>
+                    <span class="feature-card-setext">Fonts, animations, rounded corners, and shadows, have been
+                        thoughtfully integrated into MaterialMe React library</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <h2 class="footer-title">MaterialMe</h2>
+        <div class="footer-links-grid">
+            <a href="#" class="footer-link">Avatar <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Icon buttons <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Bottom sheets <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Side sheets <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Navigation rail <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Chips <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Avatar Stack <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Segmented button <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Cards <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Tooltips <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Search <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Radio button <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Extended FAB <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Badges <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Dialogs <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Bottom app bar <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Tabs <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Sliders <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">FAB <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Progress bar <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Divider <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Navigation bar <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Top app bar <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Switch <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Common Buttons <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Snackbar <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Lists <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Navigation drawer <svg width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Checkbox <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+            <a href="#" class="footer-link">Text fields <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg></a>
+        </div>
+
+        <div class="footer-bottom">
+            <span class="copyright">© 2024 MaterialMe. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="#">License</a>
+                <a href="#">Blog</a>
+                <a href="#">Dribbble</a>
+                <a href="#">Pinterest</a>
+            </div>
+        </div>
+    </footer>
+    <script src="material-me.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

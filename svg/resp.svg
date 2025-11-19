@@ -1,0 +1,18 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M60 37.5H45V52.5H60V37.5Z" fill="#B6E7EC"/>
+<path d="M45 52.5L37.5 45L45 37.5V52.5Z" fill="#B6E7EC"/>
+<path d="M37.5 0H22.5V15H37.5V0Z" fill="#B6E7EC"/>
+<path d="M22.5 15L15 7.5L22.5 0V15Z" fill="#B6E7EC"/>
+<path d="M60 15H45V30H60V15Z" fill="#B6E7EC"/>
+<path d="M45 30L37.5 22.5L45 15V30Z" fill="#B6E7EC"/>
+<path d="M37.5 22.5H22.5V37.5H37.5V22.5Z" fill="#B6E7EC"/>
+<path d="M22.5 37.5L15 30L22.5 22.5V37.5Z" fill="#B6E7EC"/>
+<path d="M15 30H0V45H15V30Z" fill="#B6E7EC"/>
+<path d="M15 30L22.5 37.5L15 45V30Z" fill="#B6E7EC"/>
+<path d="M37.5 45H22.5V60H37.5V45Z" fill="#B6E7EC"/>
+<path d="M37.5 45L45 52.5L37.5 60V45Z" fill="#B6E7EC"/>
+<path d="M15 7.5H0V22.5H15V7.5Z" fill="#B6E7EC"/>
+<path d="M15 7.5L22.5 15L15 22.5V7.5Z" fill="#B6E7EC"/>
+<path d="M37.5 22.5H22.5V37.5H37.5V22.5Z" fill="#B6E7EC"/>
+<path d="M37.5 22.5L45 30L37.5 37.5V22.5Z" fill="#B6E7EC"/>
+</svg>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation - Material Me</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="material-me.css">
+
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .installation-header {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px 48px;
+            margin-bottom: 32px;
+        }
+
+        .installation-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .installation-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin: 4px 0 0 0;
+        }
+
+        .content-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .content-header p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin: 4px 0 0 0;
+        }
+
+        .pills-nav {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            margin-bottom: 32px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .pill {
+            background-color: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .pill:not(.active):hover {
+            background-color: var(--card-accent-bg);
+            color: var(--card-accent-text);
+            border-color: transparent;
+        }
+
+        .pill.active {
+            background-color: var(--card-accent-bg);
+            color: var(--card-accent-text);
+            border-color: transparent;
+        }
+
+        .pill.active svg {
+            stroke: var(--card-accent-text);
+        }
+
+        .instructions-list {
+            padding-left: 20px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        /* Прячем панели по умолчанию, JS их переключит */
+        #prerequisites-content,
+        #installation-content {
+            display: none;
+        }
+
+        .instructions-list li {
+            margin-bottom: 12px;
+        }
+
+        .instructions-list li a {
+            color: var(--color-purple);
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .instructions-list li a:hover {
+            color: var(--color-purple-hover);
+            border-bottom-color: var(--color-purple-hover);
+        }
+
+        .instructions-list li code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background-color: var(--bg-main);
+            padding: 3px 6px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Стили для блоков кода внутри инструкций */
+        .code-block {
+            background-color: var(--bg-main);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-x: auto;
+            margin-top: 8px;
+            margin-bottom: 24px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: #C1D1E3;
+        }
+
+        .code-block .tag {
+            color: #569CD6;
+        }
+
+        .code-block .attr {
+            color: #9CDCFE;
+        }
+
+        .code-block .string {
+            color: #CE9178;
+        }
+
+        .code-block .comment {
+            color: #6A9955;
+        }
+
+        @media (max-width: 600px) {
+            .installation-header {
+                padding: 24px;
+            }
+
+            .pills-nav {
+                flex-wrap: wrap;
+            }
+        }
+
+        
+    </style>
+</head>
+
+<body>
+
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") {
+                document.body.classList.add("light-theme");
+            }
+        })();
+    </script>
+
+    <header class="header">
+        <div class="overlay" id="overlay"></div>
+
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="sidebar-close-btn" id="sidebar-close-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="./index.html">MaterialMe</a></li>
+                    <li><a href="./installation.html">Installation</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                <h3 class="nav-category">TEMPLATES</h3>
+                <ul>
+                    <li><a href="#">Cally</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+                <h3 class="nav-category">COMPONENTS</h3>
+                <ul>
+                    <li><a href="./selection.html">Selection</a></li>
+                    <li><a href="./slider.html">Sliders</a></li>
+                    <li><a href="./tabs.html">Tabs</a></li>
+                    <li><a href="./buttons.html">Buttons</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <button class="burger-menu" aria-label="Открыть меню">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="header-right">
+            <button class="theme-toggle" id="theme-toggle" aria-label="Сменить тему">
+                <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            <button class="user-icon-btn" aria-label="Профиль пользователя">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </button>
+
+            <a href="#" class="purchase-button">Purchase</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-container">
+
+            <div class="installation-header">
+                <h1>Installation</h1>
+                <p>Get up and running with Material Me</p>
+            </div>
+
+            <div class="content-header">
+                <h2>Setup</h2>
+                <p>Download and include the required files</p>
+            </div>
+
+            <div class="pills-nav">
+                <a href="#" class="pill active" id="prereq-pill">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    Quick Start
+                </a>
+                <a href="#" class="pill" id="install-pill">
+                    Manual Setup
+                </a>
+            </div>
+
+            <div id="installation-tabs-content">
+
+                <div id="prerequisites-content">
+                    <ul class="instructions-list">
+                        <li>Download the latest release from <a href="#">GitHub</a>.</li>
+                        <li>You will need two files: <code>material-me.css</code> and <code>material-me.js</code>.</li>
+                        <li>Place them in your project directory (e.g., in the root or a <code>/assets</code> folder).
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="installation-content">
+                    <ul class="instructions-list">
+                        <li>
+                            <strong>1. Include CSS</strong><br>
+                            Add the stylesheet link inside the <code>&lt;head&gt;</code> tag of your HTML file.
+                            <div class="code-block">
+                                <pre><code><span class="tag">&lt;link</span> <span class="attr">rel=</span><span class="string">"stylesheet"</span> <span class="attr">href=</span><span class="string">"material-me.css"</span><span class="tag">&gt;</span></code></pre>
+                            </div>
+                        </li>
+
+                        <li>
+                            <strong>2. Include JS</strong><br>
+                            Add the script tag just before the closing <code>&lt;/body&gt;</code> tag. This script
+                            handles interactive components like Sliders and Tabs.
+                            <div class="code-block">
+                                <pre><code><span class="tag">&lt;script</span> <span class="attr">src=</span><span class="string">"material-me.js"</span><span class="tag">&gt;&lt;/script&gt;</span></code></pre>
+                            </div>
+                        </li>
+
+                        <li>
+                            <strong>3. Ready to go!</strong><br>
+                            You can now copy and paste components from the documentation directly into your project.
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <script src="material-me.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

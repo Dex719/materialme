@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs - Material Me</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="material-me.css">
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .component-showcase {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            margin-bottom: 32px;
+        }
+
+        .component-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .component-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .pills-nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .pill:hover,
+        .pill.active {
+            background-color: var(--card-accent-bg);
+            color: var(--card-accent-text);
+            border-color: transparent;
+        }
+
+        .pill.active svg {
+            stroke: var(--card-accent-text);
+        }
+
+        .tab-panel-container {
+            padding: 32px;
+        }
+
+        .tab-panel {
+            display: none !important;
+        }
+
+        .tab-panel.active {
+            display: block !important;
+        }
+
+        .tab-panel.preview-panel.active {
+            display: flex !important;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .code-panel pre {
+            background-color: var(--bg-main);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-x: auto;
+            color: #C1D1E3;
+            margin: 0;
+        }
+
+        .tab-content-pane {
+            display: none;
+            padding: 24px 0;
+            font-size: 1rem;
+            color: var(--text-primary);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .city-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+
+        .code-wrapper {
+            position: relative;
+            margin: 0;
+        }
+
+        .code-panel pre {
+            padding-right: 50px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--color-purple);
+            border-color: var(--color-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") { document.body.classList.add("light-theme"); }
+        })();
+    </script>
+    <header class="header">
+        <div class="overlay" id="overlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="sidebar-close-btn" id="sidebar-close-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="./index.html">MaterialMe</a></li>
+                    <li><a href="./installation.html">Installation</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                <h3 class="nav-category">TEMPLATES</h3>
+                <ul>
+                    <li><a href="#">Cally</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+                <h3 class="nav-category">COMPONENTS</h3>
+                <ul>
+                    <li><a href="./selection.html">Selection</a></li>
+                    <li><a href="./slider.html">Sliders</a></li>
+                    <li><a href="./tabs.html">Tabs</a></li>
+                    <li><a href="./buttons.html">Buttons</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <button class="burger-menu" aria-label="Открыть меню"><svg xmlns="http://www.w3.org/2000/svg" width="20"
+                height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg></button>
+        <div class="header-right">
+            <button class="theme-toggle" id="theme-toggle"><svg class="icon-sun" xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg></button>
+            <button class="user-icon-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg></button>
+            <a href="#" class="purchase-button">Purchase</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-container">
+            <div class="intro-header-card">
+                <h1><span class="intro-title">Tabs</span><span class="intro-desc">organize content across different
+                        screens, data sets, and other interactions.</span></h1>
+                <div class="header-actions">
+                    <a href="#" class="figma-btn">Preview in Figma <svg width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg></a>
+                    <a href="#" class="figma-btn btn-outlined">Material Docs <svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg></a>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Primary tabs: Icon + Text</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-it">Preview</a><a href="#"
+                            class="pill" data-tab="code-it">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-it">
+                        <div class="mm-tabs-wrapper">
+                            <div class="mm-tabs-header">
+                                <button class="mm-tab active" data-target="p1-flights"><svg
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+                                    </svg>Flights</button>
+                                <button class="mm-tab" data-target="p1-train"><svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2c-4.42 0-8 .5-8 4v10.5c0 .26.22.5.5.5h1.23l2-2h8.53l2 2h1.23c.28 0 .5-.22.5-.5V6c0-3.5-3.58-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                                    </svg>Train</button>
+                                <button class="mm-tab" data-target="p1-bike"><svg xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm5.8-10l2.4-2.4.8.8c1.3 1.3 3 2.1 5.1 2.1V9c-1.5 0-2.7-.6-3.6-1.5l-1.9-1.9c-.5-.4-1-.6-1.6-.6s-1.1.2-1.4.6L7.8 8.4c-.4.4-.6.9-.6 1.4 0 .6.2 1.1.6 1.4L11 14v5h2v-6.2l-2.2-2.3zM19 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z" />
+                                    </svg>Bike</button>
+                            </div>
+                            <div class="mm-tabs-content">
+                                <div class="tab-content-pane active" id="p1-flights">Flights tab content</div>
+                                <div class="tab-content-pane" id="p1-train">Train tab content</div>
+                                <div class="tab-content-pane" id="p1-bike">Bike tab content</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-it">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-wrapper"</span><span class="tag">&gt;</span>
+  <span class="comment">&lt;!-- Header --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-header"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab active"</span> <span class="attr">data-target=</span><span class="string">"tab-1"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;</span> Flights
+    <span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab"</span> <span class="attr">data-target=</span><span class="string">"tab-2"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;</span> Train
+    <span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+
+  <span class="comment">&lt;!-- Content --&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-content"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"tab-content-pane active"</span> <span class="attr">id=</span><span class="string">"tab-1"</span><span class="tag">&gt;</span>Flights Content<span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"tab-content-pane"</span> <span class="attr">id=</span><span class="string">"tab-2"</span><span class="tag">&gt;</span>Train Content<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Primary tabs: Text</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-text">Preview</a><a
+                            href="#" class="pill" data-tab="code-text">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-text">
+                        <div class="mm-tabs-wrapper">
+                            <div class="mm-tabs-header">
+                                <button class="mm-tab active" data-target="p2-1">Flights</button>
+                                <button class="mm-tab" data-target="p2-2">Train</button>
+                                <button class="mm-tab" data-target="p2-3">Bike</button>
+                                <button class="mm-tab" data-target="p2-4">Walk</button>
+                            </div>
+                            <div class="mm-tabs-content">
+                                <div class="tab-content-pane active" id="p2-1">Flights tab</div>
+                                <div class="tab-content-pane" id="p2-2">Train tab</div>
+                                <div class="tab-content-pane" id="p2-3">Bike tab</div>
+                                <div class="tab-content-pane" id="p2-4">Walk tab</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-text">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-header"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab active"</span> <span class="attr">data-target=</span><span class="string">"p1"</span><span class="tag">&gt;</span>Flights<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab"</span> <span class="attr">data-target=</span><span class="string">"p2"</span><span class="tag">&gt;</span>Train<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab"</span> <span class="attr">data-target=</span><span class="string">"p3"</span><span class="tag">&gt;</span>Bike<span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Primary tabs: Icon</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-icon">Preview</a><a
+                            href="#" class="pill" data-tab="code-icon">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-icon">
+                        <div class="mm-tabs-wrapper">
+                            <div class="mm-tabs-header">
+                                <button class="mm-tab active" data-target="p3-1" aria-label="Flights"><svg
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
+                                    </svg></button>
+                                <button class="mm-tab" data-target="p3-2" aria-label="Train"><svg
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M12 2c-4.42 0-8 .5-8 4v10.5c0 .26.22.5.5.5h1.23l2-2h8.53l2 2h1.23c.28 0 .5-.22.5-.5V6c0-3.5-3.58-4-8-4zM7.5 17c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm3.5-7H6V6h5v4zm2 0V6h5v4h-5zm3.5 7c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                                    </svg></button>
+                                <button class="mm-tab" data-target="p3-3" aria-label="Bike"><svg
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M15.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM5 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm5.8-10l2.4-2.4.8.8c1.3 1.3 3 2.1 5.1 2.1V9c-1.5 0-2.7-.6-3.6-1.5l-1.9-1.9c-.5-.4-1-.6-1.6-.6s-1.1.2-1.4.6L7.8 8.4c-.4.4-.6.9-.6 1.4 0 .6.2 1.1.6 1.4L11 14v5h2v-6.2l-2.2-2.3zM19 12c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z" />
+                                    </svg></button>
+                                <button class="mm-tab" data-target="p3-4" aria-label="Walk"><svg
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                        <path
+                                            d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7" />
+                                    </svg></button>
+                            </div>
+                            <div class="mm-tabs-content">
+                                <div class="tab-content-pane active" id="p3-1">Flights tab</div>
+                                <div class="tab-content-pane" id="p3-2">Train tab</div>
+                                <div class="tab-content-pane" id="p3-3">Bike tab</div>
+                                <div class="tab-content-pane" id="p3-4">Walk tab</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-icon">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-header"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab active"</span> <span class="attr">data-target=</span><span class="string">"..."</span><span class="tag">&gt;</span>
+     <span class="tag">&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
+  <span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab"</span> <span class="attr">data-target=</span><span class="string">"..."</span><span class="tag">&gt;</span>
+     <span class="tag">&lt;svg&gt;</span>...<span class="tag">&lt;/svg&gt;</span>
+  <span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Secondary tabs (Example)</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-sec">Preview</a><a href="#"
+                            class="pill" data-tab="code-sec">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-sec">
+                        <div class="mm-tabs-wrapper">
+                            <div class="mm-tabs-header">
+                                <button class="mm-tab active" data-target="city-ny">New-York</button>
+                                <button class="mm-tab" data-target="city-sg">Singapore</button>
+                                <button class="mm-tab" data-target="city-bk">Aqtau</button>
+                                <button class="mm-tab" data-target="city-mb">Mumbai</button>
+                            </div>
+                            <div class="mm-tabs-content">
+                                <div class="tab-content-pane active" id="city-ny">
+                                    <p><strong>New-York</strong>, often called New York City or NYC, is the most
+                                        populous city in the United States.</p><img src="./img/new-york.avif"
+                                        alt="New York" class="city-image">
+                                </div>
+                                <div class="tab-content-pane" id="city-sg">
+                                    <p><strong>Singapore</strong>, officially the Republic of Singapore, is a sovereign
+                                        island country and city-state.</p><img src="img/singapure.jpg" alt="Singapore"
+                                        class="city-image">
+                                </div>
+                                <div class="tab-content-pane" id="city-bk">
+                                    <p><strong>Aqtau</strong> is the capital and most populous city of Thailand.</p><img
+                                        src="img/aqtau.avif" alt="Bangkok" class="city-image">
+                                </div>
+                                <div class="tab-content-pane" id="city-mb">
+                                    <p><strong>Mumbai</strong> (formerly called Bombay) is a densely populated city on
+                                        India’s west coast.</p><img src="img/almaty.jpg" alt="Mumbai"
+                                        class="city-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-sec">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-wrapper"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-header"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab active"</span> <span class="attr">data-target=</span><span class="string">"city-ny"</span><span class="tag">&gt;</span>New-York<span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;button</span> <span class="attr">class=</span><span class="string">"mm-tab"</span> <span class="attr">data-target=</span><span class="string">"city-sg"</span><span class="tag">&gt;</span>Singapore<span class="tag">&lt;/button&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-tabs-content"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"tab-content-pane active"</span> <span class="attr">id=</span><span class="string">"city-ny"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;img</span> <span class="attr">src=</span><span class="string">"..."</span> <span class="attr">class=</span><span class="string">"city-image"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"tab-content-pane"</span> <span class="attr">id=</span><span class="string">"city-sg"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Props</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="prop-badge">active</span></td>
+                                <td class="prop-type">Boolean</td>
+                                <td>Indicates if the tab is currently selected.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">data-target</span></td>
+                                <td class="prop-type">String</td>
+                                <td>ID of the content element to show when clicked.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">icon</span></td>
+                                <td class="prop-type">Node</td>
+                                <td>Optional icon element (SVG) displayed inside the tab.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">onClick</span></td>
+                                <td class="prop-type">Function</td>
+                                <td>Callback fired when the tab is clicked.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="material-me.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const codeBlock = btn.nextElementSibling.querySelector('code');
+                const textToCopy = codeBlock.innerText;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                    btn.style.color = 'var(--color-green)';
+                    btn.style.borderColor = 'var(--color-green)';
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.style.color = '';
+                        btn.style.borderColor = '';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

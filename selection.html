@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selection Controls - Material Me</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="material-me.css">
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .component-showcase {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .component-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .component-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .pills-nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .pill:not(.active):hover,
+        .pill.active {
+            background-color: var(--card-accent-bg);
+            color: var(--card-accent-text);
+            border-color: transparent;
+        }
+
+        .pill.active svg {
+            stroke: var(--card-accent-text);
+        }
+
+        .tab-panel-container {
+            padding: 32px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.code-panel.active {
+            display: block;
+        }
+
+        .tab-panel.preview-panel.active {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .code-panel pre {
+            background-color: var(--bg-main);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-x: auto;
+            color: #C1D1E3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .component-header {
+                padding: 24px;
+            }
+        }
+
+        /* Обновить и добавить в <style> */
+
+        .code-wrapper {
+            position: relative;
+            margin: 0;
+        }
+
+        .code-panel pre {
+            background-color: var(--bg-main);
+            border-radius: 12px;
+            padding: 16px;
+            padding-right: 50px;
+            /* Место для кнопки */
+            overflow-x: auto;
+            color: #C1D1E3;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--color-purple);
+            border-color: var(--color-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") { document.body.classList.add("light-theme"); }
+        })();
+    </script>
+    <header class="header">
+        <div class="overlay" id="overlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="sidebar-close-btn" id="sidebar-close-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="./index.html">MaterialMe</a></li>
+                    <li><a href="./installation.html">Installation</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                <h3 class="nav-category">TEMPLATES</h3>
+                <ul>
+                    <li><a href="#">Cally</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+                <h3 class="nav-category">COMPONENTS</h3>
+                <ul>
+                    <li><a href="./selection.html">Selection</a></li>
+                    <li><a href="./slider.html">Sliders</a></li>
+                    <li><a href="./tabs.html">Tabs</a></li>
+                    <li><a href="./buttons.html">Buttons</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <button class="burger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg></button>
+        <div class="header-right">
+            <button class="theme-toggle" id="theme-toggle"><svg class="icon-sun" xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg></button>
+            <button class="user-icon-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg></button>
+            <a href="#" class="purchase-button">Purchase</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-container">
+            <div class="intro-header-card">
+                <h1><span class="intro-title">Selection</span><span class="intro-desc">Switches toggle the state of a
+                        single item on or off.</span></h1>
+                <a href="#" class="figma-btn">Preview in Figma <svg width="16" height="16" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg></a>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Checkbox</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-checkbox">Preview</a><a
+                            href="#" class="pill" data-tab="code-checkbox">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-checkbox">
+                        <label class="mm-checkbox"><input type="checkbox"><span class="mm-visual"><span
+                                    class="mm-visual-icon"></span></span></label>
+                        <label class="mm-checkbox"><input type="checkbox" checked><span class="mm-visual"><span
+                                    class="mm-visual-icon"></span></span><span class="mm-label">I agree to
+                                everything</span></label>
+                        <label class="mm-checkbox"><input type="checkbox"><span class="mm-visual"><span
+                                    class="mm-visual-icon"></span></span><span class="mm-label">I only agree to the <a
+                                    href="#">Terms</a></span></label>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-checkbox">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="comment">&lt;!-- Basic Checkbox --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-checkbox"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"checkbox"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual-icon"</span><span class="tag">&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span>
+
+<span class="comment">&lt;!-- With Label --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-checkbox"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"checkbox"</span> <span class="attr">checked</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual-icon"</span><span class="tag">&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-label"</span><span class="tag">&gt;</span>I agree<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Radio</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-radio">Preview</a><a
+                            href="#" class="pill" data-tab="code-radio">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-radio">
+                        <label class="mm-radio"><input type="radio" name="city"><span class="mm-visual"><span
+                                    class="mm-visual-dot"></span></span><span class="mm-label">New-York</span></label>
+                        <label class="mm-radio"><input type="radio" name="city" checked><span class="mm-visual"><span
+                                    class="mm-visual-dot"></span></span><span class="mm-label">Tokio</span></label>
+                        <label class="mm-radio"><input type="radio" name="city"><span class="mm-visual"><span
+                                    class="mm-visual-dot"></span></span><span class="mm-label">Mumbai</span></label>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-radio">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="comment">&lt;!-- Group radios by name attribute --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-radio"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"radio"</span> <span class="attr">name=</span><span class="string">"city"</span> <span class="attr">value=</span><span class="string">"ny"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual-dot"</span><span class="tag">&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-label"</span><span class="tag">&gt;</span>New-York<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span>
+
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-radio"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"radio"</span> <span class="attr">name=</span><span class="string">"city"</span> <span class="attr">value=</span><span class="string">"tk"</span> <span class="attr">checked</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual-dot"</span><span class="tag">&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-label"</span><span class="tag">&gt;</span>Tokio<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Switch</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-switch">Preview</a><a
+                            href="#" class="pill" data-tab="code-switch">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-switch">
+                        <label class="mm-switch"><input type="checkbox"><span class="mm-visual"><span
+                                    class="mm-visual-thumb"></span></span></label>
+                        <label class="mm-switch"><input type="checkbox" checked><span class="mm-visual"><span
+                                    class="mm-visual-thumb"></span></span></label>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-switch">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="comment">&lt;!-- Toggle Switch --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-switch"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"checkbox"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual-thumb"</span><span class="tag">&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span>
+
+<span class="comment">&lt;!-- With Label --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-switch"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"checkbox"</span> <span class="attr">checked</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-visual-thumb"</span><span class="tag">&gt;&lt;/span&gt;</span>
+    <span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;span</span> <span class="attr">class=</span><span class="string">"mm-label"</span><span class="tag">&gt;</span>Airplane Mode<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/label&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Customization</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-custom">Preview</a><a
+                            href="#" class="pill" data-tab="code-custom">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-custom">
+                        <label class="mm-checkbox mm-color-red"><input type="checkbox" checked><span
+                                class="mm-visual"><span class="mm-visual-icon"></span></span><span class="mm-label">Red
+                                Checkbox</span></label>
+                        <label class="mm-radio mm-color-green"><input type="radio" name="color-radio" checked><span
+                                class="mm-visual"><span class="mm-visual-dot"></span></span><span class="mm-label">Green
+                                Radio</span></label>
+                        <label class="mm-switch mm-color-blue"><input type="checkbox" checked><span
+                                class="mm-visual"><span class="mm-visual-thumb"></span></span></label>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-custom">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="comment">&lt;!-- Available colors: red, green, blue --&gt;</span>
+
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-checkbox mm-color-red"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/label&gt;</span>
+
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-radio mm-color-green"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/label&gt;</span>
+
+<span class="tag">&lt;label</span> <span class="attr">class=</span><span class="string">"mm-switch mm-color-blue"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/label&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Props</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="prop-badge">id</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Id to connect label with input</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">name</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Specifies the name for this input</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">onChange</span></td>
+                                <td class="prop-type">Function</td>
+                                <td>An Event handler function</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">value</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Value of currently selected checkbox</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">checked</span></td>
+                                <td class="prop-type">Boolean</td>
+                                <td>For a checkbox input or a radio button, controls whether it is selected</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">defaultChecked</span></td>
+                                <td class="prop-type">Boolean</td>
+                                <td>Specifies the initial value for type="checkbox" and type="radio" inputs</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">ariaLabel</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Specify if label is not visible but will be announced by screen reader</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">label</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Checkbox label</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">children</span></td>
+                                <td class="prop-type">Node</td>
+                                <td>Checkbox label content</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">color</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Specify element color (red, green, blue)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="material-me.js"></script>
+    <script src="app.js"></script>
+    <script>
+    // Логика кнопки копирования
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const codeBlock = btn.nextElementSibling.querySelector('code');
+            const textToCopy = codeBlock.innerText;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = btn.innerHTML;
+                // Галочка
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.style.color = 'var(--color-green)';
+                btn.style.borderColor = 'var(--color-green)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }, 2000);
+            });
+        });
+    });
+</script>
+</body>
+
+</html>

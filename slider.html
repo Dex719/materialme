@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sliders - Material Me</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="material-me.css">
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .component-showcase {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            margin-bottom: 32px;
+        }
+
+        .component-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .component-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0;
+            margin-bottom: 20px;
+        }
+
+        .pills-nav {
+            display: flex;
+            gap: 12px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--text-secondary);
+            user-select: none;
+        }
+
+        .pill:hover,
+        .pill.active {
+            background-color: var(--card-accent-bg);
+            color: var(--card-accent-text);
+            border-color: transparent;
+        }
+
+        .pill.active svg {
+            stroke: var(--card-accent-text);
+        }
+
+        .tab-panel-container {
+            padding: 32px 32px 64px 32px;
+            position: relative;
+        }
+
+        .tab-panel {
+            display: none !important;
+        }
+
+        .tab-panel.preview-panel.active {
+            display: flex !important;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .tab-panel.code-panel.active {
+            display: block !important;
+        }
+
+        .code-panel pre {
+            background-color: var(--bg-main);
+            border-radius: 12px;
+            padding: 16px;
+            overflow-x: auto;
+            color: #C1D1E3;
+            margin: 0;
+        }
+
+        .code-wrapper {
+            position: relative;
+            margin: 0;
+        }
+
+        .code-panel pre {
+            padding-right: 50px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            padding: 0;
+            z-index: 2;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--color-purple);
+            border-color: var(--color-purple);
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light") { document.body.classList.add("light-theme"); }
+        })();
+    </script>
+    <header class="header">
+        <div class="overlay" id="overlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="sidebar-close-btn" id="sidebar-close-btn"><svg xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="./index.html">MaterialMe</a></li>
+                    <li><a href="./installation.html">Installation</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                <h3 class="nav-category">TEMPLATES</h3>
+                <ul>
+                    <li><a href="#">Cally</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                </ul>
+                <h3 class="nav-category">COMPONENTS</h3>
+                <ul>
+                    <li><a href="./selection.html">Selection</a></li>
+                    <li><a href="./slider.html">Sliders</a></li>
+                    <li><a href="./tabs.html">Tabs</a></li>
+                    <li><a href="./buttons.html">Buttons</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <button class="burger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg></button>
+        <div class="header-right"><button class="theme-toggle" id="theme-toggle"><svg class="icon-sun"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg><svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg></button></div>
+    </header>
+
+    <main>
+        <div class="page-container">
+            <div class="intro-header-card">
+                <h1><span class="intro-title">Slider</span><span class="intro-desc">allow users to make selections from
+                        a range of values.</span></h1>
+                <div class="header-actions"><a href="#" class="figma-btn">Preview in Figma <svg width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg></a></div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Single slider</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-single">Preview</a><a
+                            href="#" class="pill" data-tab="code-single">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-single">
+                        <div class="mm-slider-container">
+                            <div class="mm-slider-tooltip">0</div>
+                            <input type="range" class="mm-slider" min="0" max="100" value="14">
+                        </div>
+                        <div class="mm-slider-container">
+                            <div class="mm-slider-tooltip">0</div>
+                            <input type="range" class="mm-slider" min="0" max="100" value="50" data-icon="🔊">
+                        </div>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-single">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="comment">&lt;!-- Basic Slider --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-container"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-tooltip"</span><span class="tag">&gt;</span>0<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"range"</span> <span class="attr">class=</span><span class="string">"mm-slider"</span> <span class="attr">min=</span><span class="string">"0"</span> <span class="attr">max=</span><span class="string">"100"</span> <span class="attr">value=</span><span class="string">"50"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="comment">&lt;!-- With Icon Data --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-container"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-tooltip"</span><span class="tag">&gt;</span>0<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"range"</span> <span class="attr">class=</span><span class="string">"mm-slider"</span> <span class="attr">value=</span><span class="string">"50"</span> <span class="attr">data-icon=</span><span class="string">"🔊"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Dual slider</h2>
+                    <div class="pills-nav"><a href="#" class="pill active" data-tab="preview-dual">Preview</a><a
+                            href="#" class="pill" data-tab="code-dual">Code</a></div>
+                </div>
+                <div class="tab-panel-container">
+                    <div class="tab-panel preview-panel active" id="preview-dual">
+                        <div class="mm-range-slider">
+                            <div class="mm-slider-track"></div>
+                            <input type="range" min="0" max="1000" value="125">
+                            <div class="mm-slider-tooltip">125</div>
+                            <input type="range" min="0" max="1000" value="366">
+                            <div class="mm-slider-tooltip">366</div>
+                        </div>
+                        <div class="mm-range-slider">
+                            <div class="mm-slider-track"></div>
+                            <input type="range" min="0" max="20000" value="2999" data-icon="🪙">
+                            <div class="mm-slider-tooltip">2999</div>
+                            <input type="range" min="0" max="20000" value="19189" data-icon="🪙">
+                            <div class="mm-slider-tooltip">19189</div>
+                        </div>
+                    </div>
+                    <div class="tab-panel code-panel" id="code-dual">
+                        <div class="code-wrapper">
+                            <button class="copy-btn" title="Copy code">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </button>
+                            <pre><code><span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-range-slider"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-track"</span><span class="tag">&gt;&lt;/div&gt;</span>
+  
+  <span class="comment">&lt;!-- Input 1 --&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"range"</span> <span class="attr">min=</span><span class="string">"0"</span> <span class="attr">max=</span><span class="string">"100"</span> <span class="attr">value=</span><span class="string">"20"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-tooltip"</span><span class="tag">&gt;</span>20<span class="tag">&lt;/div&gt;</span>
+  
+  <span class="comment">&lt;!-- Input 2 --&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">type=</span><span class="string">"range"</span> <span class="attr">min=</span><span class="string">"0"</span> <span class="attr">max=</span><span class="string">"100"</span> <span class="attr">value=</span><span class="string">"80"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="attr">class=</span><span class="string">"mm-slider-tooltip"</span><span class="tag">&gt;</span>80<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="component-showcase">
+                <div class="component-header">
+                    <h2>Props</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="prop-badge">min</span></td>
+                                <td class="prop-type">Number</td>
+                                <td>The minimum value of the slider (default: 0)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">max</span></td>
+                                <td class="prop-type">Number</td>
+                                <td>The maximum value of the slider (default: 100)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">value</span></td>
+                                <td class="prop-type">Number</td>
+                                <td>Current value of the slider (controlled)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">step</span></td>
+                                <td class="prop-type">Number</td>
+                                <td>Specifies the granularity that the value must adhere to</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">onChange</span></td>
+                                <td class="prop-type">Function</td>
+                                <td>Callback fired when the value changes</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">disabled</span></td>
+                                <td class="prop-type">Boolean</td>
+                                <td>If true, the slider will be disabled</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">data-icon</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Optional emoji or text to display inside the tooltip (e.g. "🔊")</td>
+                            </tr>
+                            <tr>
+                                <td><span class="prop-badge">name</span></td>
+                                <td class="prop-type">String</td>
+                                <td>Name attribute of the input element</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="material-me.js"></script>
+    <script src="app.js"></script>
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const codeBlock = btn.nextElementSibling.querySelector('code');
+                const textToCopy = codeBlock.innerText;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                    btn.style.color = 'var(--color-green)';
+                    btn.style.borderColor = 'var(--color-green)';
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.style.color = '';
+                        btn.style.borderColor = '';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
